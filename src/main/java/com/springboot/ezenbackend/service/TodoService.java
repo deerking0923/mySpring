@@ -37,4 +37,18 @@ public class TodoService {
         todoRepository.save(todo);
         return todo;
     }
+
+    public void modify(TodoDto todoDto) {
+        Optional<Todo> result = todoRepository.findById(todoDto.getTno());
+        Todo todo = result.orElseThrow();
+        todo.setTitle(todoDto.getTitle());
+        todo.setWriter(todoDto.getWriter());
+        todo.setComplete(todoDto.isComplete());
+        todoRepository.save(todo);
+    }
+
+    public void remove(Long tno) {
+        todoRepository.deleteById(tno);
+    }
+
 }
