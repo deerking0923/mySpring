@@ -11,9 +11,13 @@ import com.springboot.ezenbackend.service.TodoService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Map;
+
 import org.hibernate.query.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
@@ -31,6 +35,13 @@ public class TodoController {
     @GetMapping("/list")
     public PageResponseDTO<TodoDto> list(PageRequestDTO pageRequestDTO) {
         return todoService.list(pageRequestDTO);
+    }
+
+    @PostMapping("/")
+    public Map<String, Long> register(@RequestBody TodoDto todoDto) {
+        System.out.println("TodoDTO : " + todoDto);
+        Long tno = todoService.register(todoDto);
+        return Map.of("tno", tno);
     }
 
 }
