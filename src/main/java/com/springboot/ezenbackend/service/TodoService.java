@@ -26,13 +26,13 @@ public class TodoService {
         return dto;
     }
 
-    public Long registerID(TodoDto todoDto) {
+    public Long register(TodoDto todoDto) {
         Todo todo = modelMapper.map(todoDto, Todo.class);
         Todo savedToto = todoRepository.save(todo);
         return savedToto.getTno();
     }
 
-    public Todo register(TodoDto todoDto) {
+    public Todo getTodo(TodoDto todoDto) {
         Todo todo = modelMapper.map(todoDto, Todo.class);
         todoRepository.save(todo);
         return todo;
