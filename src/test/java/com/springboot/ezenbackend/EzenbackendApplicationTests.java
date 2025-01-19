@@ -12,9 +12,6 @@ import com.springboot.ezenbackend.repository.TodoRepository;
 @SpringBootTest
 class EzenbackendApplicationTests {
 
-	@Autowired
-	private TodoRepository todoRepository;
-
 	@Test
 	void contextLoads() {
 		// for(int i = 1; i<100; i++){
