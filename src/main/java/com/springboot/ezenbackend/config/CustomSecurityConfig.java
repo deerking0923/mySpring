@@ -51,6 +51,10 @@ public class CustomSecurityConfig {
         // RESTful API에서는 주로 JWT와 같은 인증 방식을 사용하므로 CSRF를 비활성화합니다.
         http.csrf(config -> config.disable());
 
+        http.formLogin(config -> config.loginPage("/api/member/login")
+        // config.successHandler(new APILoginSuceessHandler());
+        );
+
         // 설정을 적용하고 SecurityFilterChain 객체를 반환합니다.
         return http.build();
     }
