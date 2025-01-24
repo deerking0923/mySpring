@@ -4,6 +4,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import com.google.gson.Gson;
 import com.springboot.ezenbackend.dto.MemberDTO;
+import com.springboot.ezenbackend.util.JWTUtil;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,8 +32,11 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
 
         Map<String, Object> claims = memberDTO.getClaims();
 
-        claims.put("accessToken", "");
-        claims.put("refreshToken", "");
+        String accessToken = JWTUtil.generateToken(claims, 10);
+        String refreshToken = JWTUtil.generateToken(claims, 60 * 24);
+
+        claims.put("accessToken", accessToken);
+        claims.put("refreshToken", refreshToken);
         Gson gson = new Gson();
 
         String jsonStr = gson.toJson(claims);
