@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.Map;
 
 import org.hibernate.query.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,7 @@ public class TodoController {
     }
 
     @GetMapping("/list")
+    @PreAuthorize("hasRole('ROLE_USER', 'ROLE_ADMIN')")
     public PageResponseDTO<TodoDto> list(PageRequestDTO pageRequestDTO) {
         return todoService.list(pageRequestDTO);
     }
@@ -58,4 +60,6 @@ public class TodoController {
         todoService.remove(tno);
         return Map.of("Result", "Success");
     }
+
+    
 }
