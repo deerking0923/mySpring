@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.springboot.ezenbackend.dto.PageRequestDTO;
+import com.springboot.ezenbackend.dto.PageResponseDTO;
 import com.springboot.ezenbackend.dto.ProductDTO;
+import com.springboot.ezenbackend.service.ProductService;
 import com.springboot.ezenbackend.util.CustomFileUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -24,9 +27,10 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/api/products")
 public class ProductController {
     private final CustomFileUtil fileUtil;
+    private final ProductService productService;
 
     @PostMapping("/")
-    public Map<String, String> register(ProductDTO productDTO){
+    public Map<String, Long> register(ProductDTO productDTO){
         log.info("register: "+productDTO);
 
         List<MultipartFile> files = productDTO.getFiles();
@@ -37,7 +41,9 @@ public class ProductController {
 
         log.info(uploadFileNames);
 
-        return Map.of("PostResult", "SUCESS");
+        Long pno = productService.register(productDTO);
+
+        return Map.of("result", pno);
     }
 
     @GetMapping("/view/{fileName}")
@@ -45,4 +51,15 @@ public class ProductController {
         return fileUtil.getFile(fileName);
     }
 
+    @GetMapping("/list")
+    public PageResponseDTO<ProductDTO> list(PageRequestDTO pageRequestDTO){
+        log.info("list------------------" + pageRequestDTO);
+
+        return productService.getList(pageRequestDTO);
+    }
+
+    @GetMapping("/{pno}")
+    public ProductDTO read(@PathVariable(name = "pno") Long pno){
+        return productService.get(pno);
+    }
 }
