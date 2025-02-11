@@ -37,7 +37,7 @@ public class ProductController {
 
         log.info(uploadFileNames);
 
-        return Map.of("Result", "SUCESS");
+        return Map.of("PostResult", "SUCESS");
     }
 
     @GetMapping("/view/{fileName}")
