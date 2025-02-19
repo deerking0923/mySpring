@@ -33,6 +33,9 @@ public class JWTCheckFilter extends OncePerRequestFilter{
         if (path.startsWith("/api/member/")) {
             return true;
         }
+        if(path.startsWith("/api/products/view/")){
+            return true;
+        }
 
         return false;
     }
@@ -48,7 +51,7 @@ public class JWTCheckFilter extends OncePerRequestFilter{
             Map<String, Object> claims = JWTUtil.vaildateToken(accessToken);
             log.info("JWT claims : " + claims);
 
-            filterChain.doFilter(request, response);
+            //filterChain.doFilter(request, response);
 
 
             String email = (String) claims.get("email");
